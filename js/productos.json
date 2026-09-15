@@ -1,0 +1,28 @@
+[
+    {
+        "nombre":"Herbicidas",
+        "imagen":"./Recursos/Servicios-Productos/herbicidas.jpg"
+    },
+    {
+    "nombre": "Fungicidas",
+    "imagen": "./Recursos/Servicios-Productos/fungicidas.jpg",
+    "listaProductos": [
+        { "nombre": "Producto 1" },
+        { "nombre": "Producto 2" },
+        { "nombre": "Producto 3" },
+        { "nombre": "Producto 4" }
+    ]
+},
+    {
+        "nombre":"Fertilizantes",
+        "imagen":"./Recursos/Servicios-Productos/fertilizantes.jpg"
+    },
+    {
+        "nombre":"Semillas",
+        "imagen":"./Recursos/Servicios-Productos/semillas.jpg"
+    },
+    {
+        "nombre":"Insecticidas",
+        "imagen":"./Recursos/Servicios-Productos/insecticidas.jpg"
+    }
+]
