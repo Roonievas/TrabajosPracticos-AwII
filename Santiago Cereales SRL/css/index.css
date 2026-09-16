@@ -45,6 +45,9 @@ a {
 ul {
     list-style: none;
 }
+.oculto {
+    display: none;
+}
 
 main {
     max-width: var(--ancho-maximo);
@@ -89,10 +92,8 @@ main {
 .hero {
 
     background-image:
-        linear-gradient(
-            rgba(255,255,255,0.80),
-            rgba(255,255,255,0.35)
-        ),
+        linear-gradient(rgba(255, 255, 255, 0.80),
+            rgba(255, 255, 255, 0.35)),
         url("../recursos/inicio/campodorado.jpg");
 
     background-size: cover;
@@ -429,6 +430,13 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+.servicio__detalle {
+    margin-top: 1rem;
+}
+
+.servicio .tarjeta__link {
+    color: white;
+}
 .productos {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -448,9 +456,43 @@ button:hover {
 .producto img {
     border-radius: var(--radio);
     margin-bottom: 1rem;
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .producto h3 {
+    margin-bottom: 1rem;
+}
+
+.detalle-productos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.detalle-productos__titulo {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+}
+
+.detalle-productos .producto {
+    border-top: 4px solid var(--color-secundario);
+}
+
+.producto__marca {
+    color: var(--color-principal);
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.producto__descripcion {
+    color: var(--color-texto);
+    font-size: 0.95rem;
     margin-bottom: 1rem;
 }
 
@@ -565,6 +607,10 @@ button:hover {
     }
 
     .productos {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-productos {
         grid-template-columns: 1fr;
     }
 

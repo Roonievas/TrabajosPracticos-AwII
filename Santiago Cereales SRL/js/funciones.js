@@ -17,7 +17,7 @@ export function renderizarProductos(contenedor, listaProductos) {
             <article class="producto" data-id="${producto.id}">
                 <img src="${producto.imagen}" alt="${producto.nombre}">
                 <h3>${producto.nombre}</h3>
-                <a class="boton boton--verde" href="https://wa.me/5493513931308" target="_blank">Consultar Disponibilidad</a>
+                <button class="boton boton--verde" type="button">Ver productos</button>
             </article>
         `;
 
@@ -27,7 +27,7 @@ export function renderizarProductos(contenedor, listaProductos) {
 
 export function renderizarDetalleProductos(contenedor, listaProductos, nombreCategoria) {
 
-    contenedor.innerHTML = `<h2>Productos de ${nombreCategoria}</h2>`;
+    contenedor.innerHTML = `<h2 class="detalle-productos__titulo">Productos de ${nombreCategoria}</h2>`;
 
     if (listaProductos.length === 0) {
 
