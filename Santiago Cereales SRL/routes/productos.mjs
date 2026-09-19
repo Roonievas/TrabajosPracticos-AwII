@@ -36,4 +36,20 @@ router.get("/productos/:categoriaId", async (req, res) => {
     }
 });
 
+router.post("/productos", async (req, res) => {
+    try {
+        const nuevoProducto = req.body;
+        const respuesta = await fetch(URL_PRODUCTOS, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nuevoProducto)
+        });
+        const productoCreado = await respuesta.json();
+        res.status(201).json(productoCreado);
+    } catch (error) {
+        console.error("Error al crear el producto:", error);
+        res.status(500).json({ mensaje: "Error al crear el producto" });
+    }
+});
+
 export default router;
