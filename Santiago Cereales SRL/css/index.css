@@ -549,6 +549,97 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+/* GESTION DE PRODUCTOS (ABM) */
+
+.abm-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+
+    margin-top: 3rem;
+}
+
+.abm-hero img {
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+}
+
+.abm-hero__contenido h1 {
+    margin-bottom: 1rem;
+}
+
+.abm-hero__contenido p {
+    margin-bottom: 1rem;
+}
+
+.abm-formulario {
+    margin-top: 5rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.abm-formulario__texto h2 {
+    margin-bottom: 1rem;
+}
+
+.abm-formulario__botones {
+    display: flex;
+    gap: 1rem;
+}
+
+.abm-listado {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.abm-listado h2 {
+    margin-bottom: 1.5rem;
+}
+
+.abm-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: var(--radio);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+.abm-tabla th,
+.abm-tabla td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.abm-tabla th {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+.abm-tabla img {
+    border-radius: 8px;
+}
+
+.abm-tabla td button {
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.boton-eliminar {
+    background-color: #c0392b;
+}
+
+.boton-eliminar:hover {
+    background-color: #922b21;
+}
+
 /* RESPONSIVE */
 
 @media screen and (max-width: 768px) {
@@ -624,5 +715,17 @@ button:hover {
 
     .contacto-formulario {
         grid-template-columns: 1fr;
+    }
+
+    .abm-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .abm-formulario {
+        grid-template-columns: 1fr;
+    }
+
+    .abm-tabla {
+        font-size: 0.8rem;
     }
 }

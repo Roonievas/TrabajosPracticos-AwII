@@ -68,16 +68,19 @@ y no `npm install` / `npm install <paquete>`, para evitar que se generen `packag
 
 ```
 Santiago Cereales SRL/
-├─ server.mjs              # configura y levanta el servidor
+├─ server.mjs                     # configura y levanta el servidor
 ├─ routes/
-│  └─ productos.mjs        # define los endpoints propios
-├─ css/                    # estilos del Front-End
-├─ js/                     # scripts del Front-End
-├─ recursos/                # imágenes y otros recursos
+│  └─ productos.mjs                # define los endpoints propios
+├─ css/                            # estilos del Front-End
+├─ js/                             # scripts del Front-End
+├─ recursos/                       # imágenes y otros recursos
 ├─ index.html
-├─ empresa.html
-├─ contacto.html
-├─ serviciosyproductos.html
+├─ paginas/
+│  ├─ empresa.html
+│  ├─ contacto.html
+│  ├─ serviciosyproductos.html
+│  ├─ abmProductos.html            # ABM de productos (Alta, Baja, Modificación)
+│  └─ plantilla.html               # base para futuras páginas
 ├─ package.json
 └─ pnpm-lock.yaml
 ```
@@ -87,18 +90,25 @@ Santiago Cereales SRL/
 | Método | Ruta | Descripción |
 |---|---|---|
 | GET | `/categorias` | Obtiene todas las categorías de productos disponibles. |
+| GET | `/productos` | Obtiene todos los productos (sin filtrar). Lo usa la tabla del ABM. |
 | GET | `/productos/:categoriaId` | Obtiene los productos pertenecientes a una categoría específica. |
-| POST | `/productos` | Crea un nuevo producto y lo guarda en MockAPI (recibe los datos en formato JSON en el cuerpo de la petición). Probado con Thunder Client; su uso desde una pantalla del Front-End (carga de productos) está planificado para el TP3 (CRUD). |
+
 
 ## Middlewares utilizados
 
 - `express.static(".")` — sirve los archivos estáticos del Front-End.
 - `productosRouter` — agrupa y registra las rutas propias del proyecto.
-- `express.json()` — permite leer el cuerpo (`body`) de las peticiones que llegan en formato JSON (necesario para el endpoint POST).
+- `express.json()` — permite leer el cuerpo (`body`) de las peticiones que llegan en formato JSON (necesario para los endpoints POST y PUT).
 - `logger` (propio) — registra en consola el método y la ruta de cada petición recibida.
+
+## ABM de productos (`paginas/abmProductos.html`)
+
+Pantalla que permite dar de Alta un producto, Modificar uno existente (botón "Editar" en la tabla) y darlo de Baja (botón "Eliminar"). Usa los endpoints POST, PUT y DELETE de la tabla anterior.
+
+**Limitación conocida (a propósito, por ahora):** cualquier persona que entre a esta página puede cargar, editar o borrar productos — todavía no hay un login que restrinja esto solo al administrador. Es intencional: la seguridad y el control de acceso del CRUD están planificados para el TP4, no para esta entrega.
 
 ## Roadmap del proyecto (según cronograma de la materia)
 
-- **TP2** (actual): back-end propio + conexión a API externa. ✅
-- **TP3**: desarrollo del CRUD completo.
-- **TP4**: login y seguridad del CRUD.
+- **TP2**: back-end propio + conexión a API externa. ✅
+- **TP3**: ABM de productos (Alta, Baja, Modificación). ✅
+- **TP4**: login y seguridad del CRUD (pendiente — restringir el ABM al administrador).

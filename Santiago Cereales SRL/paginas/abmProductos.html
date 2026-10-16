@@ -1,34 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/index.css">
-    <title>Alta de Productos</title>
+    <title>Santiago Cereales- Gestión de Productos</title>
 </head>
+
 <body>
-     <header class="header">
-        <a href="./" aria-label="Ir al inicio">
-            <img src="./Recursos/LogoSC.png.png" width="200" alt="Logo SantiagoCereales">
+    <header class="header">
+        <a href="../index.html" aria-label="Ir al inicio">
+            <img src="../recursos/LogoSC.png.png" width="200" alt="Logo SantiagoCereales">
         </a>
 
         <nav class="menu-principal">
 
             <!-- vinculo -->
-            <a href="./">
+            <a href="../index.html">
                 Inicio
             </a>
             <!-- vinculo -->
-            <a href="./empresa.html">
+            <a href="empresa.html">
                 Empresa
             </a>
             <!-- vinculo -->
-            <a href="./serviciosyproductos.html">
+            <a href="serviciosyproductos.html">
                 Servicios/ Productos
             </a>
             <!-- vinculo -->
-            <a href="./contacto.html">
+            <a href="contacto.html">
                 Contacto
+            </a>
+            <!-- vinculo -->
+            <a href="abmProductos.html">
+                Gestionar Productos
             </a>
             <a href="https://wa.me/5493513931308" target="_blank">
                 Whatsapp
@@ -37,152 +43,216 @@
     </header>
     <main>
 
-        <!-- HERO CONTACTO -->
+        <!-- HERO ABM -->
 
-        <section class="contacto-hero">
+        <section class="abm-hero">
 
-            <div class="contacto-hero__contenido">
+            <div class="abm-hero__contenido">
 
                 <p class="seccion__etiqueta">
-                    CONTACTO
+                    GESTIÓN DE PRODUCTOS
                 </p>
 
                 <h1>
-                    ¿Necesitás asesoramiento o cotizar productos?
+                    Administrá el catálogo de productos
                 </h1>
 
                 <p>
-                    Nuestro equipo de expertos está listo para acompañar tu producción
-                    con las mejores herramientas del mercado.
+                    Desde acá podés dar de alta productos nuevos, modificar los
+                    datos de un producto existente o eliminarlo del catálogo.
                 </p>
-
-                <a href="https://wa.me/5493513931308" target="_blank" class="boton boton--verde">
-
-                    Hablar por WhatsApp
-                </a>
 
             </div>
 
-            <img src="./recursos/contacto/contacto1.jpg" alt="Campo agrícola">
+            <img src="../recursos/inicio/campodorado.jpg" alt="Campo de cultivo">
 
         </section>
 
-        <!-- FORMULARIO -->
+        <!-- FORMULARIO ABM -->
 
-        <section class="amb-formulario">
+        <section class="abm-formulario">
 
-            <form id="formulario-abm" action="./contacto.html" method="post">
+            <div class="abm-formulario__texto">
 
-                <label for="id-producto">
-                   Producto
+                <p class="seccion__etiqueta" id="etiqueta-formulario">
+                    ALTA DE PRODUCTO
+                </p>
+
+                <h2 id="titulo-formulario">
+                    Cargar un producto nuevo
+                </h2>
+
+                <p>
+                    Completá los datos del producto. Para modificar uno existente,
+                    usá el botón "Editar" en la tabla de abajo.
+                </p>
+
+            </div>
+
+            <form id="formulario-abm">
+
+                <input type="hidden" id="input-id">
+
+                <label for="input-nombre">
+                    Nombre
                 </label>
 
-                <input type="text" id="id-producto" name="producto" required>
+                <input type="text" id="input-nombre" name="nombre" required>
 
-                <label for="id-categoria">
-                    Categoria
+                <label for="input-categoria">
+                    Categoría
                 </label>
 
-                <input type="text" id="id-categoria" name="categoria" required>
+                <select id="input-categoria" name="categoriaId" required>
+                    <option value="" disabled selected>Seleccioná una categoría</option>
+                </select>
 
-                <label for="id-descripcion">
-                    Descripcion
+                <label for="input-marca">
+                    Marca
                 </label>
 
-                <input type="text" id="id-descripcion" name="descripcion" required>
+                <input type="text" id="input-marca" name="marca" required>
 
-                <label for="id-precio">
-                    Mensaje
+                <label for="input-descripcion">
+                    Descripción
                 </label>
 
-                <input type="text" id="id-precio" name="precio"  required>
+                <textarea id="input-descripcion" name="descripcion" rows="4" required></textarea>
 
-                <button type="submit">
-                    Enviar Consulta
-                </button>
+                <label for="input-imagen">
+                    Imagen (URL)
+                </label>
+
+                <input type="text" id="input-imagen" name="imagen" required>
+
+                <div class="abm-formulario__botones">
+
+                    <button type="submit" id="boton-guardar">
+                        Guardar producto
+                    </button>
+
+                    <button type="button" id="boton-cancelar" class="boton boton--blanco oculto">
+                        Cancelar edición
+                    </button>
+
+                </div>
 
             </form>
+
+        </section>
+
+        <!-- LISTADO / TABLA DE PRODUCTOS -->
+
+        <section class="abm-listado">
+
+            <p class="seccion__etiqueta">
+                CATÁLOGO ACTUAL
+            </p>
+
+            <h2>
+                Productos cargados
+            </h2>
+
+            <table class="abm-tabla">
+
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Categoría</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="cuerpo-tabla-productos">
+                    <!-- Las filas se generan dinámicamente con JavaScript -->
+                </tbody>
+
+            </table>
 
         </section>
 
     </main>
     <footer class="footer">
 
-    <div class="footer__empresa">
+        <div class="footer__empresa">
 
-        <div class="footer__logo">
-            <img
-                src="./recursos/LogoSC.png.png"
-                alt="Logo Santiago Cereales">
+            <div class="footer__logo">
+                <img
+                    src="../recursos/LogoSC.png.png"
+                    alt="Logo Santiago Cereales">
+            </div>
+
+            <h3>
+                Santiago Cereales SRL
+            </h3>
+
+            <p>
+                Tradición y excelencia en el campo argentino.
+            </p>
+
         </div>
 
-        <h3>
-            Santiago Cereales SRL
-        </h3>
+        <div class="footer__enlaces">
 
-        <p>
-            Tradición y excelencia en el campo argentino.
-        </p>
+            <h3>Seguinos</h3>
 
-    </div>
+            <ul>
 
-    <div class="footer__enlaces">
+                <li>
+                    <a
+                        href="https://www.instagram.com/santiagocereales?igsh=MTFkYzE0N2NzanZ1aA=="
+                        target="_blank">
 
-        <h3>Seguinos</h3>
+                        📸 Instagram
 
-        <ul>
+                    </a>
+                </li>
 
-            <li>
-                <a
-                    href="https://www.instagram.com/santiagocereales?igsh=MTFkYzE0N2NzanZ1aA=="
-                    target="_blank">
+                <li>
+                    <a
+                        href="https://maps.app.goo.gl/6XRsUuD2ZsvLk3Zo7"
+                        target="_blank">
 
-                    📸 Instagram
+                        📍 Ubicación
 
-                </a>
-            </li>
+                    </a>
+                </li>
 
-            <li>
-                <a
-                    href="https://maps.app.goo.gl/6XRsUuD2ZsvLk3Zo7"
-                    target="_blank">
+            </ul>
 
-                    📍 Ubicación
+        </div>
 
-                </a>
-            </li>
+        <div class="footer__contacto">
 
-        </ul>
+            <h3>Contacto</h3>
 
-    </div>
+            <address>
 
-    <div class="footer__contacto">
+                <p>
+                    Av. Rodríguez Peña 961
+                </p>
 
-        <h3>Contacto</h3>
+                <p>
+                    Despeñaderos, Córdoba
+                </p>
 
-        <address>
+                <p>
+                    CP 5121
+                </p>
 
-            <p>
-                Av. Rodríguez Peña 961
-            </p>
+                <p>
+                    +54 9 351 3931308
+                </p>
 
-            <p>
-                Despeñaderos, Córdoba
-            </p>
+            </address>
 
-            <p>
-                CP 5121
-            </p>
+        </div>
 
-            <p>
-                +54 9 351 3931308
-            </p>
-
-        </address>
-
-    </div>
-
-</footer>
-    <script src="../js/contacto.js"></script>
+    </footer>
+    <script src="../js/abmProductos.js"></script>
 </body>
+
 </html>

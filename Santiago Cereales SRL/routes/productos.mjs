@@ -17,7 +17,20 @@ router.get("/categorias", async (req, res) => {
     }
 });
 
-// Endpoint 2: GET /productos/:categoriaId
+// Endpoint 2: GET /productos (todos los productos, sin filtrar)
+// Se usa para el listado del ABM (tabla de Baja/Modificación).
+router.get("/productos", async (req, res) => {
+    try {
+        const respuesta = await fetch(URL_PRODUCTOS);
+        const productos = await respuesta.json();
+        res.json(productos);
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        res.status(500).json({ mensaje: "Error al obtener los productos" });
+    }
+});
+
+// Endpoint 3: GET /productos/:categoriaId (productos de una categoría puntual)
 router.get("/productos/:categoriaId", async (req, res) => {
     try {
         const categoriaId = req.params.categoriaId;
@@ -26,8 +39,8 @@ router.get("/productos/:categoriaId", async (req, res) => {
         const todosLosProductos = await respuesta.json();
 
         const productosFiltrados = todosLosProductos.filter(
-    producto => producto.categoriaId === Number(categoriaId)
-);
+            producto => producto.categoriaId === Number(categoriaId)
+        );
 
         res.json(productosFiltrados);
     } catch (error) {
@@ -36,6 +49,7 @@ router.get("/productos/:categoriaId", async (req, res) => {
     }
 });
 
+// Endpoint 4 (ALTA): POST /productos
 router.post("/productos", async (req, res) => {
     try {
         const nuevoProducto = req.body;
@@ -49,6 +63,36 @@ router.post("/productos", async (req, res) => {
     } catch (error) {
         console.error("Error al crear el producto:", error);
         res.status(500).json({ mensaje: "Error al crear el producto" });
+    }
+});
+
+// Endpoint 5 (MODIFICACIÓN): PUT /productos/:id
+router.put("/productos/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datosActualizados = req.body;
+        const respuesta = await fetch(`${URL_PRODUCTOS}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosActualizados)
+        });
+        const productoActualizado = await respuesta.json();
+        res.json(productoActualizado);
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        res.status(500).json({ mensaje: "Error al actualizar el producto" });
+    }
+});
+
+// Endpoint 6 (BAJA): DELETE /productos/:id
+router.delete("/productos/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        await fetch(`${URL_PRODUCTOS}/${id}`, { method: "DELETE" });
+        res.status(200).json({ mensaje: "Producto eliminado correctamente" });
+    } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+        res.status(500).json({ mensaje: "Error al eliminar el producto" });
     }
 });
 
