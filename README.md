@@ -7,7 +7,9 @@ El proyecto nació en Aplicaciones Web I como un sitio estático (HTML/CSS/JS). 
 ## Equipo
 
 - Rocío Nievas
-- [completar con los demás integrantes]
+- Milagros Córdoba
+- Trinidad Casagrande
+- Antonella Chanquia
 
 ## Tecnologías utilizadas
 

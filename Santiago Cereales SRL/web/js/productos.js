@@ -52,7 +52,7 @@ function mostrarProductosDeCategoria(categoriaId) {
         c => c.id === categoriaId
     );
 
-    fetch(`/productos/${categoriaId}`)
+    fetch(`/api/v1/productos/categoria/${categoriaId}`)
 
         .then(respuesta => respuesta.json())
 
@@ -81,7 +81,7 @@ function mostrarProductosDeCategoria(categoriaId) {
 
 }
 
-fetch("/categorias")
+fetch("/api/v1/categorias")
 
     .then(respuesta => respuesta.json())
 
