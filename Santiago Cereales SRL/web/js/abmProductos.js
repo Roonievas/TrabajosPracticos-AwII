@@ -118,7 +118,10 @@ function entrarEnModoEdicion(producto) {
     inputCategoria.value = producto.categoriaId;
     inputMarca.value = producto.marca;
     inputDescripcion.value = producto.descripcion;
-    inputImagen.value = producto.imagen;
+    // Un input type="file" no se puede precargar con JavaScript por seguridad
+    // del navegador. Lo dejamos vacío: si no se elige una imagen nueva, el
+    // servidor mantiene la que el producto ya tenía (ver productos.modelo.mjs).
+    inputImagen.value = "";
 
     etiquetaFormulario.textContent = "MODIFICACIÓN DE PRODUCTO";
     tituloFormulario.textContent = `Editando: ${producto.nombre}`;
@@ -148,26 +151,29 @@ botonCancelar.addEventListener("click", salirDeModoEdicion);
 formulario.addEventListener("submit", evento => {
     evento.preventDefault();
 
-    const producto = {
-        nombre: inputNombre.value.trim(),
-        categoriaId: Number(inputCategoria.value),
-        marca: inputMarca.value.trim(),
-        descripcion: inputDescripcion.value.trim(),
-        imagen: inputImagen.value.trim()
-    };
+    const datosFormulario = new FormData();
+    datosFormulario.append("nombre", inputNombre.value.trim());
+    datosFormulario.append("categoriaId", inputCategoria.value);
+    datosFormulario.append("marca", inputMarca.value.trim());
+    datosFormulario.append("descripcion", inputDescripcion.value.trim());
+
+    // Solo se agrega el archivo si se eligió uno (si no, el campo queda afuera
+    // del FormData y el servidor interpreta que hay que mantener la imagen actual).
+    if (inputImagen.files.length > 0) {
+        datosFormulario.append("imagen", inputImagen.files[0]);
+    }
 
     if (modoEdicion) {
-        actualizarProducto(inputId.value, producto);
+        actualizarProducto(inputId.value, datosFormulario);
     } else {
-        crearProducto(producto);
+        crearProducto(datosFormulario);
     }
 });
 
-function crearProducto(producto) {
+function crearProducto(datosFormulario) {
     fetch("/api/v1/productos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(producto)
+        body: datosFormulario
     })
         .then(respuesta => respuesta.json())
         .then(() => {
@@ -180,11 +186,10 @@ function crearProducto(producto) {
         });
 }
 
-function actualizarProducto(id, producto) {
+function actualizarProducto(id, datosFormulario) {
     fetch(`/api/v1/productos/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(producto)
+        body: datosFormulario
     })
         .then(respuesta => respuesta.json())
         .then(() => {

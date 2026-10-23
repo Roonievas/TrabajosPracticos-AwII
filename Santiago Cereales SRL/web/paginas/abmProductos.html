@@ -120,10 +120,15 @@
                 <textarea id="input-descripcion" name="descripcion" rows="4" required></textarea>
 
                 <label for="input-imagen">
-                    Imagen (URL)
+                    Imagen
                 </label>
 
-                <input type="text" id="input-imagen" name="imagen" required>
+                <input type="file" id="input-imagen" name="imagen" accept="image/*">
+
+                <p class="abm-formulario__ayuda">
+                    Si estás editando un producto y no elegís una imagen nueva,
+                    se mantiene la imagen que ya tenía.
+                </p>
 
                 <div class="abm-formulario__botones">
 

@@ -316,10 +316,13 @@ form {
 }
 
 input,
+select,
 textarea {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: var(--radio);
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 button {
@@ -458,7 +461,8 @@ button:hover {
     margin-bottom: 1rem;
     height: 180px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: var(--color-fondo);
 }
 
 .producto h3 {
@@ -589,6 +593,12 @@ button:hover {
 .abm-formulario__botones {
     display: flex;
     gap: 1rem;
+}
+
+.abm-formulario__ayuda {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: -0.5rem;
 }
 
 .abm-listado {

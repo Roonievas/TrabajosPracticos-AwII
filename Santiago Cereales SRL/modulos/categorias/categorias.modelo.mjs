@@ -1,6 +1,6 @@
-const URL_CATEGORIAS = "https://6aa336e0e7ae868cdf7ab2c1.mockapi.io/categorias";
+import pool from "../../db/conexion.mjs";
 
 export async function obtenerCategorias() {
-    const respuesta = await fetch(URL_CATEGORIAS);
-    return await respuesta.json();
+    const resultado = await pool.query("SELECT * FROM categorias");
+    return resultado.rows;
 }

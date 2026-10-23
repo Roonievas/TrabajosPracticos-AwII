@@ -1,1 +1,4 @@
 node_modules/
+.env
+Santiago Cereales SRL/web/recursos/productos-subidos/*
+!Santiago Cereales SRL/web/recursos/productos-subidos/.gitkeep

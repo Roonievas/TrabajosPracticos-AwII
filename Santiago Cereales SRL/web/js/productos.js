@@ -49,7 +49,7 @@ function activarClicksCategorias() {
 function mostrarProductosDeCategoria(categoriaId) {
 
     const categoria = categorias.find(
-        c => c.id === categoriaId
+        c => c.id === Number(categoriaId)
     );
 
     fetch(`/api/v1/productos/categoria/${categoriaId}`)

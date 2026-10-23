@@ -1,4 +1,21 @@
+import multer from "multer";
+import path from "node:path";
 import * as modelo from "./productos.modelo.mjs";
+
+// Multer: guarda la imagen subida en web/recursos/productos-subidos.
+// A diferencia del ejemplo básico del profe (que usa "dest" y guarda el
+// archivo sin extensión), acá usamos "diskStorage" con una función de
+// nombre propia para conservar la extensión original (.jpg, .png, etc.).
+const subirImagen = multer({
+    storage: multer.diskStorage({
+        destination: path.resolve("web/recursos/productos-subidos"),
+        filename: (req, archivo, callback) => {
+            const extension = path.extname(archivo.originalname);
+            const nombreUnico = `${Date.now()}${extension}`;
+            callback(null, nombreUnico);
+        }
+    })
+}).single("imagen");
 
 export async function obtenerProductos(req, res) {
     try {
@@ -32,27 +49,51 @@ export async function obtenerProductosPorCategoria(req, res) {
     }
 }
 
-export async function crearProducto(req, res) {
-    try {
-        const nuevoProducto = req.body;
-        const productoCreado = await modelo.crearProducto(nuevoProducto);
-        res.status(201).json(productoCreado);
-    } catch (error) {
-        console.error("Error al crear el producto:", error);
-        res.status(500).json({ mensaje: "Error al crear el producto" });
-    }
+export function crearProducto(req, res) {
+    subirImagen(req, res, async (error) => {
+        if (error) {
+            console.error("Error al subir la imagen:", error);
+            return res.status(500).json({ mensaje: "No se pudo subir la imagen" });
+        }
+        try {
+            const nuevoProducto = {
+                nombre: req.body.nombre,
+                categoriaId: Number(req.body.categoriaId),
+                marca: req.body.marca,
+                descripcion: req.body.descripcion,
+                imagen: req.file ? `/recursos/productos-subidos/${req.file.filename}` : null
+            };
+            const productoCreado = await modelo.crearProducto(nuevoProducto);
+            res.status(201).json(productoCreado);
+        } catch (error) {
+            console.error("Error al crear el producto:", error);
+            res.status(500).json({ mensaje: "Error al crear el producto" });
+        }
+    });
 }
 
-export async function actualizarProducto(req, res) {
-    try {
-        const id = req.params.id;
-        const datosActualizados = req.body;
-        const productoActualizado = await modelo.actualizarProducto(id, datosActualizados);
-        res.json(productoActualizado);
-    } catch (error) {
-        console.error("Error al actualizar el producto:", error);
-        res.status(500).json({ mensaje: "Error al actualizar el producto" });
-    }
+export function actualizarProducto(req, res) {
+    subirImagen(req, res, async (error) => {
+        if (error) {
+            console.error("Error al subir la imagen:", error);
+            return res.status(500).json({ mensaje: "No se pudo subir la imagen" });
+        }
+        try {
+            const id = req.params.id;
+            const datosActualizados = {
+                nombre: req.body.nombre,
+                categoriaId: Number(req.body.categoriaId),
+                marca: req.body.marca,
+                descripcion: req.body.descripcion,
+                imagen: req.file ? `/recursos/productos-subidos/${req.file.filename}` : null
+            };
+            const productoActualizado = await modelo.actualizarProducto(id, datosActualizados);
+            res.json(productoActualizado);
+        } catch (error) {
+            console.error("Error al actualizar el producto:", error);
+            res.status(500).json({ mensaje: "Error al actualizar el producto" });
+        }
+    });
 }
 
 export async function eliminarProducto(req, res) {
