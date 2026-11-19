@@ -46,7 +46,7 @@ ul {
     list-style: none;
 }
 .oculto {
-    display: none;
+    display: none !important;
 }
 
 main {
@@ -155,6 +155,10 @@ main {
 
 .boton--blanco:hover {
     background-color: var(--color-principal);
+    color: white;
+}
+
+.menu-principal .boton--verde {
     color: white;
 }
 

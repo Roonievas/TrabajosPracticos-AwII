@@ -18,6 +18,11 @@ const botonCancelar = document.getElementById("boton-cancelar");
 
 const cuerpoTabla = document.getElementById("cuerpo-tabla-productos");
 
+const linkLogin = document.getElementById("abm-link-login");
+const botonLogout = document.getElementById("abm-boton-logout");
+const seccionFormulario = document.getElementById("abm-seccion-formulario");
+const seccionListado = document.getElementById("abm-seccion-listado");
+
 // ---------------------------------------------------------------------
 // Cargar categorías en el <select> del formulario
 // ---------------------------------------------------------------------
@@ -173,10 +178,19 @@ formulario.addEventListener("submit", evento => {
 function crearProducto(datosFormulario) {
     fetch("/api/v1/productos", {
         method: "POST",
+        credentials: "same-origin",
         body: datosFormulario
     })
-        .then(respuesta => respuesta.json())
-        .then(() => {
+        .then(respuesta => {
+            if (respuesta.status === 401) {
+                alert("Tu sesión expiró. Iniciá sesión de nuevo.");
+                mostrarSinSesion();
+                return null;
+            }
+            return respuesta.json();
+        })
+        .then(datos => {
+            if (!datos) return;
             salirDeModoEdicion();
             cargarProductos();
         })
@@ -189,10 +203,19 @@ function crearProducto(datosFormulario) {
 function actualizarProducto(id, datosFormulario) {
     fetch(`/api/v1/productos/${id}`, {
         method: "PUT",
+        credentials: "same-origin",
         body: datosFormulario
     })
-        .then(respuesta => respuesta.json())
-        .then(() => {
+        .then(respuesta => {
+            if (respuesta.status === 401) {
+                alert("Tu sesión expiró. Iniciá sesión de nuevo.");
+                mostrarSinSesion();
+                return null;
+            }
+            return respuesta.json();
+        })
+        .then(datos => {
+            if (!datos) return;
             salirDeModoEdicion();
             cargarProductos();
         })
@@ -212,8 +235,13 @@ function eliminarProducto(id) {
         return;
     }
 
-    fetch(`/api/v1/productos/${id}`, { method: "DELETE" })
-        .then(() => {
+    fetch(`/api/v1/productos/${id}`, { method: "DELETE", credentials: "same-origin" })
+        .then(respuesta => {
+            if (respuesta.status === 401) {
+                alert("Tu sesión expiró. Iniciá sesión de nuevo.");
+                mostrarSinSesion();
+                return;
+            }
             cargarProductos();
         })
         .catch(error => {
@@ -223,7 +251,49 @@ function eliminarProducto(id) {
 }
 
 // ---------------------------------------------------------------------
+// Sesión (TP4): la pantalla se muestra solo si hay un administrador logueado.
+// La seguridad real está en el servidor (401 en las rutas de escritura);
+// esto es solo para no mostrar el formulario a quien no inició sesión.
+// ---------------------------------------------------------------------
+function mostrarSinSesion() {
+    linkLogin.classList.remove("oculto");
+    botonLogout.classList.add("oculto");
+    seccionFormulario.classList.add("oculto");
+    seccionListado.classList.add("oculto");
+}
+
+function mostrarConSesion(username) {
+    linkLogin.classList.add("oculto");
+    botonLogout.classList.remove("oculto");
+    seccionFormulario.classList.remove("oculto");
+    seccionListado.classList.remove("oculto");
+}
+
+function comprobarSesion() {
+    fetch("/api/v1/auth/estado", { credentials: "same-origin" })
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            if (datos.autenticado) {
+                mostrarConSesion(datos.username);
+            } else {
+                mostrarSinSesion();
+            }
+        })
+        .catch(error => {
+            console.error("Error comprobando la sesión:", error);
+            mostrarSinSesion();
+        });
+}
+
+botonLogout.addEventListener("click", () => {
+    fetch("/api/v1/auth/logout", { method: "POST", credentials: "same-origin" })
+        .then(() => mostrarSinSesion())
+        .catch(error => console.error("Error cerrando sesión:", error));
+});
+
+// ---------------------------------------------------------------------
 // Inicio
 // ---------------------------------------------------------------------
+comprobarSesion();
 cargarCategorias();
 cargarProductos();

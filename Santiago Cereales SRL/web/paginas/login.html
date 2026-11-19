@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Santiago Cereales- Iniciar sesión</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" aria-label="Ir al inicio">
+            <img src="../recursos/LogoSC.png.png" width="200" alt="Logo SantiagoCereales">
+        </a>
+
+        <nav class="menu-principal">
+
+            <!-- vinculo -->
+            <a href="../index.html">
+                Inicio
+            </a>
+            <!-- vinculo -->
+            <a href="empresa.html">
+                Empresa
+            </a>
+            <!-- vinculo -->
+            <a href="serviciosyproductos.html">
+                Servicios/ Productos
+            </a>
+            <!-- vinculo -->
+            <a href="contacto.html">
+                Contacto
+            </a>
+            <!-- vinculo -->
+            <a href="abmProductos.html">
+                Gestionar Productos
+            </a>
+            <a href="https://wa.me/5493513931308" target="_blank">
+                Whatsapp
+            </a>
+        </nav>
+    </header>
+    <main>
+
+        <!-- HERO LOGIN -->
+
+        <section class="abm-formulario">
+
+            <div class="abm-formulario__texto">
+
+                <p class="seccion__etiqueta">
+                    ACCESO ADMINISTRADOR
+                </p>
+
+                <h1>
+                    Iniciar sesión
+                </h1>
+
+                <p>
+                    Ingresá tu usuario y contraseña para gestionar el catálogo de productos.
+                </p>
+
+            </div>
+
+            <form id="formulario-login">
+
+                <label for="input-username">
+                    Usuario
+                </label>
+
+                <input type="text" id="input-username" name="username" required autocomplete="username">
+
+                <label for="input-password">
+                    Contraseña
+                </label>
+
+                <input type="password" id="input-password" name="password" required autocomplete="current-password">
+
+                <p id="mensaje-login" class="abm-formulario__ayuda" role="alert"></p>
+
+                <div class="abm-formulario__botones">
+
+                    <button type="submit" id="boton-ingresar">
+                        Ingresar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+    <footer class="footer">
+
+        <div class="footer__empresa">
+
+            <div class="footer__logo">
+                <img
+                    src="../recursos/LogoSC.png.png"
+                    alt="Logo Santiago Cereales">
+            </div>
+
+            <h3>
+                Santiago Cereales SRL
+            </h3>
+
+            <p>
+                Tradición y excelencia en el campo argentino.
+            </p>
+
+        </div>
+
+        <div class="footer__enlaces">
+
+            <h3>Seguinos</h3>
+
+            <ul>
+
+                <li>
+                    <a
+                        href="https://www.instagram.com/santiagocereales?igsh=MTFkYzE0N2NzanZ1aA=="
+                        target="_blank">
+
+                        📸 Instagram
+
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="https://maps.app.goo.gl/6XRsUuD2ZsvLk3Zo7"
+                        target="_blank">
+
+                        📍 Ubicación
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer__contacto">
+
+            <h3>Contacto</h3>
+
+            <address>
+
+                <p>
+                    Av. Rodríguez Peña 961
+                </p>
+
+                <p>
+                    Despeñaderos, Córdoba
+                </p>
+
+                <p>
+                    CP 5121
+                </p>
+
+                <p>
+                    +54 9 351 3931308
+                </p>
+
+            </address>
+
+        </div>
+
+    </footer>
+    <script src="../js/login.js"></script>
+</body>
+
+</html>

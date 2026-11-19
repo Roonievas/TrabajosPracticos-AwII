@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as controlador from "./productos.controlador.mjs";
+import { verificarToken } from "../auth/auth.middleware.mjs";
 
 const rutasProductos = new Router();
 
@@ -102,7 +103,7 @@ rutasProductos.get("/api/v1/productos/:id", controlador.obtenerProducto);
  *             schema:
  *               $ref: '#/components/schemas/Producto'
  */
-rutasProductos.post("/api/v1/productos", controlador.crearProducto);
+rutasProductos.post("/api/v1/productos", verificarToken, controlador.crearProducto);
 
 /**
  * @swagger
@@ -144,7 +145,7 @@ rutasProductos.post("/api/v1/productos", controlador.crearProducto);
  *             schema:
  *               $ref: '#/components/schemas/Producto'
  */
-rutasProductos.put("/api/v1/productos/:id", controlador.actualizarProducto);
+rutasProductos.put("/api/v1/productos/:id", verificarToken, controlador.actualizarProducto);
 
 /**
  * @swagger
@@ -163,6 +164,6 @@ rutasProductos.put("/api/v1/productos/:id", controlador.actualizarProducto);
  *       200:
  *         description: Producto eliminado correctamente
  */
-rutasProductos.delete("/api/v1/productos/:id", controlador.eliminarProducto);
+rutasProductos.delete("/api/v1/productos/:id", verificarToken, controlador.eliminarProducto);
 
 export default rutasProductos;
