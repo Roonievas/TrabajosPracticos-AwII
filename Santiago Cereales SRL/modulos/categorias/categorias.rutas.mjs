@@ -18,6 +18,12 @@ const rutasCategorias = new Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Categoria'
+ *       500:
+ *         description: Error al obtener las categorías
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasCategorias.get("/api/v1/categorias", controlador.obtenerCategorias);
 

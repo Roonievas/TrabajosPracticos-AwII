@@ -19,6 +19,12 @@ const rutasProductos = new Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Producto'
+ *       500:
+ *         description: Error al obtener los productos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.get("/api/v1/productos", controlador.obtenerProductos);
 
@@ -44,6 +50,12 @@ rutasProductos.get("/api/v1/productos", controlador.obtenerProductos);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Producto'
+ *       500:
+ *         description: Error al obtener los productos de la categoría
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.get("/api/v1/productos/categoria/:categoriaId", controlador.obtenerProductosPorCategoria);
 
@@ -67,6 +79,12 @@ rutasProductos.get("/api/v1/productos/categoria/:categoriaId", controlador.obten
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Producto'
+ *       500:
+ *         description: Error al obtener el producto
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.get("/api/v1/productos/:id", controlador.obtenerProducto);
 
@@ -76,6 +94,8 @@ rutasProductos.get("/api/v1/productos/:id", controlador.obtenerProducto);
  *   post:
  *     summary: Dar de alta un producto nuevo
  *     tags: [Productos]
+ *     security:
+ *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -95,6 +115,7 @@ rutasProductos.get("/api/v1/productos/:id", controlador.obtenerProducto);
  *                 type: string
  *                 format: binary
  *                 description: Archivo de imagen del producto
+ *             required: [nombre, categoriaId]
  *     responses:
  *       201:
  *         description: Producto creado
@@ -102,6 +123,18 @@ rutasProductos.get("/api/v1/productos/:id", controlador.obtenerProducto);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Producto'
+ *       401:
+ *         description: El usuario no tiene una sesión válida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: No se pudo subir la imagen o crear el producto
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.post("/api/v1/productos", verificarToken, controlador.crearProducto);
 
@@ -111,6 +144,8 @@ rutasProductos.post("/api/v1/productos", verificarToken, controlador.crearProduc
  *   put:
  *     summary: Modificar un producto existente
  *     tags: [Productos]
+ *     security:
+ *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -137,6 +172,7 @@ rutasProductos.post("/api/v1/productos", verificarToken, controlador.crearProduc
  *                 type: string
  *                 format: binary
  *                 description: Opcional. Si no se envía, se mantiene la imagen actual.
+ *             required: [nombre, categoriaId]
  *     responses:
  *       200:
  *         description: Producto actualizado
@@ -144,6 +180,18 @@ rutasProductos.post("/api/v1/productos", verificarToken, controlador.crearProduc
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Producto'
+ *       401:
+ *         description: El usuario no tiene una sesión válida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: No se pudo subir la imagen o actualizar el producto
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.put("/api/v1/productos/:id", verificarToken, controlador.actualizarProducto);
 
@@ -153,6 +201,8 @@ rutasProductos.put("/api/v1/productos/:id", verificarToken, controlador.actualiz
  *   delete:
  *     summary: Eliminar un producto
  *     tags: [Productos]
+ *     security:
+ *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -163,6 +213,22 @@ rutasProductos.put("/api/v1/productos/:id", verificarToken, controlador.actualiz
  *     responses:
  *       200:
  *         description: Producto eliminado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Mensaje'
+ *       401:
+ *         description: El usuario no tiene una sesión válida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Error al eliminar el producto
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 rutasProductos.delete("/api/v1/productos/:id", verificarToken, controlador.eliminarProducto);
 

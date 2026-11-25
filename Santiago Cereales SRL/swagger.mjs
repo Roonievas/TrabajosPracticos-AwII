@@ -6,7 +6,7 @@ const opciones = {
         info: {
             title: "API Santiago Cereales SRL",
             version: "1.0.0",
-            description: "Documentación de los endpoints propios del proyecto: categorías y productos."
+            description: "Documentación de los endpoints propios del proyecto: categorías, productos y autenticación."
         },
         servers: [
             { url: "http://localhost:3000" }
@@ -15,6 +15,7 @@ const opciones = {
             schemas: {
                 Categoria: {
                     type: "object",
+                    required: ["id", "nombre"],
                     properties: {
                         id: { type: "integer", example: 1 },
                         nombre: { type: "string", example: "Herbicidas" },
@@ -23,6 +24,7 @@ const opciones = {
                 },
                 Producto: {
                     type: "object",
+                    required: ["id", "nombre", "categoriaId"],
                     properties: {
                         id: { type: "integer", example: 1 },
                         nombre: { type: "string", example: "Azoxicipro Fender Mix" },
@@ -31,6 +33,44 @@ const opciones = {
                         imagen: { type: "string", example: "/recursos/productos-subidos/1699999999999.jpg" },
                         categoriaId: { type: "integer", example: 2 }
                     }
+                },
+                LoginRequest: {
+                    type: "object",
+                    required: ["username", "password"],
+                    properties: {
+                        username: { type: "string", example: "admin" },
+                        password: { type: "string", format: "password", example: "admin123" }
+                    }
+                },
+                EstadoSesion: {
+                    type: "object",
+                    required: ["autenticado"],
+                    properties: {
+                        autenticado: { type: "boolean", example: true },
+                        username: { type: "string", example: "admin" }
+                    }
+                },
+                Mensaje: {
+                    type: "object",
+                    required: ["mensaje"],
+                    properties: {
+                        mensaje: { type: "string", example: "Operación realizada correctamente" }
+                    }
+                },
+                Error: {
+                    type: "object",
+                    required: ["mensaje"],
+                    properties: {
+                        mensaje: { type: "string", example: "Error interno del servidor" }
+                    }
+                }
+            },
+            securitySchemes: {
+                cookieAuth: {
+                    type: "apiKey",
+                    in: "cookie",
+                    name: "token",
+                    description: "Cookie firmada con el token JWT generada por el endpoint de login."
                 }
             }
         }
